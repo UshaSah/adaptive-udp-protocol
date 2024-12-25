@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  receiver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python receiver.py  # Command to run receiver.py
+    ports:
+      - "4010:4010"
+    networks:
+      - udp_network
+
+  sender:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python dynamic_sliding_window.py  # Command to run dynamic_sliding_window.py
+    depends_on:
+      - receiver
+    networks:
+      - udp_network
+
+  network_conditioner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./train.sh  # Command to run train.sh
+    depends_on:
+      - sender
+    networks:
+      - udp_network
+
+networks:
+  udp_network:
+    driver: bridge
