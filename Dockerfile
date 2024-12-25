@@ -2,7 +2,8 @@
 FROM python:3.9-slim
 
 # Install necessary tools
-RUN apt-get update && apt-get install -y iproute2 iputils-ping sudo
+RUN apt-get update && apt-get install -y \
+    iproute2 iputils-ping sudo net-tools procps
 
 # Set working directory
 WORKDIR /app
