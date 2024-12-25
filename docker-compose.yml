@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python receiver.py  # Command to run receiver.py
+    command: python receiver.py
     ports:
       - "4010:4010"
     networks:
@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python dynamic_sliding_window.py  # Command to run dynamic_sliding_window.py
+    command: python dynamic_sliding_window.py
     depends_on:
       - receiver
     networks:
@@ -24,9 +24,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ./train.sh  # Command to run train.sh
-    depends_on:
-      - sender
+    command: ./train.sh
+    cap_add:
+      - NET_ADMIN
     networks:
       - udp_network
 

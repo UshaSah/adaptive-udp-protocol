@@ -15,10 +15,8 @@ TIMEOUT = 5               # Timeout for retransmissions (in seconds)
 udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # define server address and port
-server_address = ("127.0.0.1", 4010)
+server_address = ("127.0.0.1", RECV_PORT)
 udp_socket.settimeout(TIMEOUT)
-
-
 
 # read the file and divide it into packets
 file_path = "./message.txt"
@@ -32,7 +30,7 @@ with open(file_path, "rb") as file:
     data = file.read()
 
 packets = [data[i:i + BUFFER_SIZE - 4] for i in range(0, len(data), BUFFER_SIZE - 4)]
-message = "Hello UDP Server!"
+
 def stop_and_wait():
     for sequence_number, packet in enumerate(packets):
         while True:
@@ -54,7 +52,6 @@ def stop_and_wait():
                 
 stop_and_wait()
 print("File transfer complete!")
-
 
 # close the socket
 udp_socket.close()

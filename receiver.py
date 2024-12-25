@@ -5,9 +5,10 @@ import re
 
 # Defining Global Parameters
 # IP address of the receiver. "" implies localhost
-IP_ADDRESS = ""
+IP_ADDRESS = "0.0.0.0"
 # Port number on localhost on which receiver runs
-PORT = int(input("Enter the Port number you want your receiver to run: "))
+# PORT = int(input("Enter the Port number you want your receiver to run: "))
+PORT = 4010
 # Size of the buffer, defining the maximum data that can be buffered for transmission at a time
 BUFFER_SIZE = 1500
 # Window size at the receiver (practically very large)
