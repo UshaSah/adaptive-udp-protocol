@@ -18,6 +18,9 @@ services:
       - "4010:4010"
     networks:
       - udp_network
+    cap_add:
+      - NET_ADMIN
+    privileged: true
 
   sender:
     build:
@@ -28,6 +31,7 @@ services:
       - receiver
     networks:
       - udp_network
+    privileged: true
 
   
 

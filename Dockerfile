@@ -1,9 +1,20 @@
 # Base image
-FROM python:3.9-slim
+FROM ubuntu:20.04
 
-# Install necessary tools
+# Set non-interactive frontend for apt to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Python 3, pip3, and necessary tools
 RUN apt-get update && apt-get install -y \
-    iproute2 iputils-ping sudo net-tools procps
+    python3 python3-pip \
+    iproute2 iputils-ping sudo net-tools procps \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Create a symbolic link for python -> python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Upgrade pip and setuptools
+RUN pip3 install --no-cache-dir -U pip setuptools
 
 # Set working directory
 WORKDIR /app
@@ -14,5 +25,9 @@ COPY . /app
 # Make train.sh executable
 RUN chmod +x /app/train.sh
 
-# Expose the receiver port
+# Expose the port for the receiver
 EXPOSE 4010
+
+# Default entry point
+
+CMD ["bash"]
