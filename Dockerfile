@@ -16,6 +16,9 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 # Upgrade pip and setuptools
 RUN pip3 install --no-cache-dir -U pip setuptools
 
+# Set TCP Tahoe as the congestion control algorithm
+RUN sysctl -w net.ipv4.tcp_congestion_control=reno || echo "TCP Tahoe setup will run at container start"
+
 # Set working directory
 WORKDIR /app
 
